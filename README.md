@@ -1,2 +1,0 @@
-# completedTask
-Created with CodeSandbox
