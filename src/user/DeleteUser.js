@@ -73,7 +73,7 @@ class DeleteUser extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Display Records</h1>
+        <h1>Display User Records</h1>
 
         <div className="tableOrder">
           <table>
