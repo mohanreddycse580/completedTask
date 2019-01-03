@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import "./AddUser.css";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
 
-class AddUser extends Component {
+class EditUser extends Component {
   constructor(props) {
     super(props);
 
@@ -24,6 +23,7 @@ class AddUser extends Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
+    sessionStorage.setItem("userData", "");
     const user = {
       user_id: this.state.user_id,
       first_name: this.state.first_name,
@@ -32,7 +32,7 @@ class AddUser extends Component {
       gender: this.state.gender,
       address: this.state.address
     };
-    console.log("user:" + user);
+
     if (
       this.state.user_id &&
       this.state.first_name &&
@@ -45,38 +45,23 @@ class AddUser extends Component {
         redirectToReferrer: true
       });
       sessionStorage.setItem("userData", JSON.stringify(user));
-      /*axios.post("userdetails.json", { user }).then(res => {
-        console.log(res);
-        console.log(res.data);
-      }); 
-      /*
-      fetch("userdetails.json", {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-      })
-        .then(res => res.json())
-        .then(res => console.log(res))
-        .catch(errors => console.log(errors));
-
-       axios
-        .put("userdetails.json", {
-          body: JSON.stringify(user),
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          }
-        })
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-          console.log(user);
-        }); */
     }
   };
+  componentWillMount() {
+    if (sessionStorage.getItem("userData")) {
+      let userData = JSON.parse(sessionStorage.getItem("userData"));
+      console.log(userData);
+
+      this.setState({
+        user_id: userData.user_id,
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        age: userData.age,
+        gender: userData.gender,
+        address: userData.address
+      });
+    }
+  }
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -89,7 +74,7 @@ class AddUser extends Component {
     return (
       <div>
         <div>
-          <h1>Add User</h1>
+          <h1>Update User</h1>
         </div>
         <form onSubmit={this.handleSubmit}>
           <div class="row">
@@ -99,12 +84,9 @@ class AddUser extends Component {
             <div class="col-75">
               <input
                 type="text"
+                value={this.state.user_id}
                 name="user_id"
                 placeholder="User Id"
-                onChange={this.handleChange}
-                required
-                pattern="[a-zA-Z0-9]{6,}"
-                title="Must contain at least 6 or more characters"
               />
             </div>
           </div>
@@ -117,6 +99,7 @@ class AddUser extends Component {
               <input
                 type="text"
                 name="first_name"
+                value={this.state.first_name}
                 placeholder="First Name"
                 onChange={this.handleChange}
                 pattern="[a-zA-Z ]{1,10}"
@@ -133,6 +116,7 @@ class AddUser extends Component {
               <input
                 type="text"
                 name="last_name"
+                value={this.state.last_name}
                 placeholder="Last Name"
                 onChange={this.handleChange}
                 required
@@ -149,6 +133,7 @@ class AddUser extends Component {
               <input
                 type="number"
                 name="age"
+                value={this.state.age}
                 min="0"
                 max="60"
                 placeholder="age"
@@ -157,21 +142,6 @@ class AddUser extends Component {
               />
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-25">
-              <label>Gender</label>
-            </div>
-            <div class="col-75">
-              <div onChange={this.handleChange}>
-                <input type="radio" value="MALE" name="gender" required />
-                Male
-                <input type="radio" value="FEMALE" name="gender" required />
-                Female
-              </div>
-            </div>
-          </div>
-
           <div class="row">
             <div class="col-25">
               <label>Address </label>
@@ -190,7 +160,7 @@ class AddUser extends Component {
           </div>
 
           <div class="row">
-            <input type="submit" value="Add" />
+            <input type="submit" value="update" />
           </div>
         </form>
       </div>
@@ -198,4 +168,4 @@ class AddUser extends Component {
   }
 }
 
-export default AddUser;
+export default EditUser;

@@ -5,6 +5,7 @@ import AddUser from "./user/AddUser";
 import Claim from "./claims/Claim";
 import InsurenePayer from "./insurence/InsurencePayer";
 import DeleteUser from "./user/DeleteUser";
+import EditUser from "./user/EditUser";
 const Routes = () => (
   <BrowserRouter>
     <Switch>
@@ -13,6 +14,7 @@ const Routes = () => (
       <Route exact path="/claim" component={Claim} />
       <Route exact path="/insurence" component={InsurenePayer} />
       <Route exact path="/delete" component={DeleteUser} />
+      <Route exact path="/edit" component={EditUser} />
     </Switch>
   </BrowserRouter>
 );

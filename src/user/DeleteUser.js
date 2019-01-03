@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 class DeleteUser extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +27,8 @@ class DeleteUser extends Component {
       checkedItems: new Map()
     };
 
-    this.deleteFeedAction = this.deleteFeedAction.bind(this);
+    this.deletehandleAction = this.deletehandleAction.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e) {
     const item = e.target.name;
@@ -40,15 +41,31 @@ class DeleteUser extends Component {
   }
 
   componentWillMount() {
-    const data = JSON.parse(JSON.stringify(this.state.users));
-    console.log(data);
-    this.setState({
-      data: data
-    });
+    if (sessionStorage.getItem("userData")) {
+      let userData = JSON.parse(sessionStorage.getItem("userData"));
+      console.log(userData);
+      const user = [
+        {
+          user_id: userData.user_id,
+          first_name: userData.first_name,
+          last_name: userData.last_name,
+          age: userData.age,
+          gender: userData.gender,
+          address: userData.address
+        }
+      ];
+      this.setState({
+        data: user
+      });
+      //const data = JSON.parse(JSON.stringify(this.state.users));
+      console.log(this.state);
+      //this.setState({
+      // data: data
+      //});
+    }
   }
-  deleteFeedAction(e) {
+  deletehandleAction(e) {
     let updateIndex = e.target.getAttribute("value");
-
     this.state.data.splice(updateIndex, 1);
     this.setState({ data: this.state.data });
   }
@@ -79,8 +96,11 @@ class DeleteUser extends Component {
                 <td>{d.address}</td>
 
                 <td>
+                  <Link to="/edit">
+                    <button type="button">Edit</button>
+                  </Link>
                   <button
-                    onClick={this.deleteFeedAction}
+                    onClick={this.deletehandleAction}
                     id={d.user_id}
                     value={index}
                   >
