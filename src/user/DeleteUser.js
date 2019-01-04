@@ -5,112 +5,78 @@ class DeleteUser extends Component {
     super(props);
 
     this.state = {
-      data: [],
-      users: [
-        {
-          user_id: "1",
-          first_name: "Mohan",
-          last_name: "Reddy",
-          age: "28",
-          gender: "Male",
-          address: "GVP"
-        },
-        {
-          user_id: "2",
-          first_name: "Reddy",
-          last_name: "Mohan",
-          age: "30",
-          gender: "Male",
-          address: "Chennai"
-        }
-      ],
-      checkedItems: new Map()
+      users: []
     };
 
     this.deletehandleAction = this.deletehandleAction.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(e) {
-    const item = e.target.name;
-    console.log(item);
-    const isChecked = e.target.checked;
-    console.log(isChecked);
-    this.setState(prevState => ({
-      checkedItems: prevState.checkedItems.set(item, isChecked)
-    }));
-  }
-
   componentWillMount() {
     if (sessionStorage.getItem("userData")) {
       let userData = JSON.parse(sessionStorage.getItem("userData"));
       console.log(userData);
-      const user = [
-        {
-          user_id: userData.user_id,
-          first_name: userData.first_name,
-          last_name: userData.last_name,
-          age: userData.age,
-          gender: userData.gender,
-          address: userData.address
-        }
-      ];
-      this.setState({
-        data: user
-      });
-      //const data = JSON.parse(JSON.stringify(this.state.users));
+
       console.log(this.state);
-      //this.setState({
-      // data: data
-      //});
+      this.setState({
+        users: userData
+      });
     }
   }
   deletehandleAction(e) {
     let updateIndex = e.target.getAttribute("value");
-    this.state.data.splice(updateIndex, 1);
-    this.setState({ data: this.state.data });
+    this.state.users.splice(updateIndex, 1);
+    this.setState({ users: this.state.users });
+    sessionStorage.setItem("userData", JSON.stringify(this.state.users));
   }
 
   render() {
     return (
       <div className="App">
-        <h1>Display User Records</h1>
+        {this.state.users.length > 0 ? (
+          <h1>Display User Records</h1>
+        ) : (
+          <h1> No User Records</h1>
+        )}
 
-        <div className="tableOrder">
-          <table>
-            <tr>
-              <th>User ID</th>
-              <th>FirstName</th>
-              <th>LastName</th>
-              <th>Age</th>
-              <th>Gender</th>
-              <th>Address</th>
-              <th>Operation</th>
-            </tr>
-            {this.state.data.map((d, index) => (
+        {this.state.users.length > 0 ? (
+          <div className="tableOrder">
+            <table>
               <tr>
-                <td>{d.user_id}</td>
-                <td>{d.first_name}</td>
-                <td>{d.last_name}</td>
-                <td>{d.age}</td>
-                <td>{d.gender}</td>
-                <td>{d.address}</td>
-
-                <td>
-                  <Link to="/edit">
-                    <button type="button">Edit</button>
-                  </Link>
-                  <button
-                    onClick={this.deletehandleAction}
-                    id={d.user_id}
-                    value={index}
-                  >
-                    Delete
-                  </button>
-                </td>
+                <th>User ID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Operation</th>
               </tr>
-            ))}
-          </table>
-        </div>
+              {this.state.users.map((d, index) => (
+                <tr>
+                  <td>{d.user_id}</td>
+                  <td>{d.first_name}</td>
+                  <td>{d.last_name}</td>
+                  <td>{d.age}</td>
+                  <td>{d.gender}</td>
+                  <td>{d.address}</td>
+
+                  <td>
+                    <Link to="/edit">
+                      <button type="button">Edit</button>
+                    </Link>
+                    <button
+                      onClick={this.deletehandleAction}
+                      id={d.user_id}
+                      value={index}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </table>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     );
   }

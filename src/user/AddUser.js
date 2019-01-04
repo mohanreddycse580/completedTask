@@ -8,6 +8,7 @@ class AddUser extends Component {
     super(props);
 
     this.state = {
+      users: [],
       user_id: "",
       first_name: "",
       last_name: "",
@@ -20,7 +21,14 @@ class AddUser extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
+  componentWillMount() {
+    if (sessionStorage.getItem("userData")) {
+      let userData = JSON.parse(sessionStorage.getItem("userData"));
+      this.setState({
+        users: userData
+      });
+    }
+  }
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
@@ -44,7 +52,8 @@ class AddUser extends Component {
       this.setState({
         redirectToReferrer: true
       });
-      sessionStorage.setItem("userData", JSON.stringify(user));
+      this.state.users.push(user);
+      sessionStorage.setItem("userData", JSON.stringify(this.state.users));
       /*axios.post("userdetails.json", { user }).then(res => {
         console.log(res);
         console.log(res.data);
@@ -79,6 +88,9 @@ class AddUser extends Component {
   };
 
   handleChange(e) {
+    this.setState({
+      redirectToReferrer: false
+    });
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -92,11 +104,11 @@ class AddUser extends Component {
           <h1>Add User</h1>
         </div>
         <form onSubmit={this.handleSubmit}>
-          <div class="row">
-            <div class="col-25">
+          <div className="row">
+            <div className="col-25">
               <label>User Id</label>
             </div>
-            <div class="col-75">
+            <div className="col-75">
               <input
                 type="text"
                 name="user_id"
@@ -109,11 +121,11 @@ class AddUser extends Component {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-25">
+          <div className="row">
+            <div className="col-25">
               <label>First Name</label>
             </div>
-            <div class="col-75">
+            <div className="col-75">
               <input
                 type="text"
                 name="first_name"
@@ -125,11 +137,11 @@ class AddUser extends Component {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-25">
+          <div className="row">
+            <div className="col-25">
               <label>Last Name</label>
             </div>
-            <div class="col-75">
+            <div className="col-75">
               <input
                 type="text"
                 name="last_name"
@@ -141,11 +153,11 @@ class AddUser extends Component {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-25">
+          <div className="row">
+            <div className="col-25">
               <label>Age</label>
             </div>
-            <div class="col-75">
+            <div className="col-75">
               <input
                 type="number"
                 name="age"
@@ -158,11 +170,11 @@ class AddUser extends Component {
             </div>
           </div>
 
-          <div class="row">
+          <div className="row">
             <div class="col-25">
               <label>Gender</label>
             </div>
-            <div class="col-75">
+            <div className="col-75">
               <div onChange={this.handleChange}>
                 <input type="radio" value="MALE" name="gender" required />
                 Male
@@ -172,16 +184,15 @@ class AddUser extends Component {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-25">
+          <div className="row">
+            <div className="col-25">
               <label>Address </label>
             </div>
-            <div class="col-75">
+            <div className="col-75">
               <textarea
                 rows="4"
                 cols="25"
                 name="address"
-                value={this.state.address}
                 onChange={this.handleChange}
                 required
                 pattern="[a-zA-Z ]{10,100}"
@@ -189,7 +200,7 @@ class AddUser extends Component {
             </div>
           </div>
 
-          <div class="row">
+          <div className="row">
             <input type="submit" value="Add" />
           </div>
         </form>

@@ -7,6 +7,7 @@ class EditUser extends Component {
     super(props);
 
     this.state = {
+      users: [],
       user_id: "",
       first_name: "",
       last_name: "",
@@ -23,7 +24,7 @@ class EditUser extends Component {
   handleSubmit = event => {
     event.preventDefault();
     console.log(this.state);
-    sessionStorage.setItem("userData", "");
+
     const user = {
       user_id: this.state.user_id,
       first_name: this.state.first_name,
@@ -44,21 +45,31 @@ class EditUser extends Component {
       this.setState({
         redirectToReferrer: true
       });
-      sessionStorage.setItem("userData", JSON.stringify(user));
+
+      const index = this.state.users.findIndex(
+        data => data.user_id === user.user_id
+      );
+      const users = [...this.state.users];
+      users[index] = user;
+      this.setState({ users });
+
+      sessionStorage.setItem("userData", JSON.stringify(users));
     }
   };
   componentWillMount() {
     if (sessionStorage.getItem("userData")) {
       let userData = JSON.parse(sessionStorage.getItem("userData"));
-      console.log(userData);
+
+      console.log(userData[0]);
 
       this.setState({
-        user_id: userData.user_id,
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-        age: userData.age,
-        gender: userData.gender,
-        address: userData.address
+        users: userData,
+        user_id: userData[0].user_id,
+        first_name: userData[0].first_name,
+        last_name: userData[0].last_name,
+        age: userData[0].age,
+        gender: userData[0].gender,
+        address: userData[0].address
       });
     }
   }
