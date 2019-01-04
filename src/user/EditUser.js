@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 class EditUser extends Component {
   constructor(props) {
     super(props);
-
+    //alert("con " + this.props.match.params.value);
     this.state = {
       users: [],
       user_id: "",
@@ -59,17 +59,17 @@ class EditUser extends Component {
   componentWillMount() {
     if (sessionStorage.getItem("userData")) {
       let userData = JSON.parse(sessionStorage.getItem("userData"));
-
-      console.log(userData[0]);
-
+      let index = this.props.match.params.value;
+      console.log(userData[index]);
+      let indexUserData = userData[index];
       this.setState({
         users: userData,
-        user_id: userData[0].user_id,
-        first_name: userData[0].first_name,
-        last_name: userData[0].last_name,
-        age: userData[0].age,
-        gender: userData[0].gender,
-        address: userData[0].address
+        user_id: indexUserData.user_id,
+        first_name: indexUserData.first_name,
+        last_name: indexUserData.last_name,
+        age: indexUserData.age,
+        gender: indexUserData.gender,
+        address: indexUserData.address
       });
     }
   }

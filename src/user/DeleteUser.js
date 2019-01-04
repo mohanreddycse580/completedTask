@@ -59,7 +59,7 @@ class DeleteUser extends Component {
                   <td>{d.address}</td>
 
                   <td>
-                    <Link to="/edit">
+                    <Link to={"/edit/" + index}>
                       <button type="button">Edit</button>
                     </Link>
                     <button

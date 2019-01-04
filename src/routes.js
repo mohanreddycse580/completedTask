@@ -11,10 +11,10 @@ const Routes = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/add" component={AddUser} />
-      <Route exact path="/claim" component={Claim} />
-      <Route exact path="/insurence" component={InsurenePayer} />
-      <Route exact path="/delete" component={DeleteUser} />
-      <Route exact path="/edit" component={EditUser} />
+      <Route path="/claim" component={Claim} />
+      <Route path="/insurence" component={InsurenePayer} />
+      <Route path="/delete" component={DeleteUser} />
+      <Route path="/edit/:value" component={EditUser} />
     </Switch>
   </BrowserRouter>
 );
