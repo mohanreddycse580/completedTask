@@ -80,7 +80,7 @@ class EditUser extends Component {
 
   render() {
     if (this.state.redirectToReferrer) {
-      return <Redirect to={"/"} />;
+      return <Redirect to={"/delete"} />;
     }
     return (
       <div>
