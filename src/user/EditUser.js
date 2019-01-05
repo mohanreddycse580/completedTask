@@ -83,10 +83,9 @@ class EditUser extends Component {
       return <Redirect to={"/delete"} />;
     }
     return (
-      <div>
-        <div>
-          <h1>Update User</h1>
-        </div>
+      <div className="container">
+        <h1>Update User</h1>
+
         <form onSubmit={this.handleSubmit}>
           <div class="row">
             <div class="col-25">

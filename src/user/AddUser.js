@@ -99,10 +99,9 @@ class AddUser extends Component {
       return <Redirect to={"/"} />;
     }
     return (
-      <div>
-        <div>
-          <h1>Add User</h1>
-        </div>
+      <div className="container">
+        <h1>Add User</h1>
+
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="col-25">
