@@ -44,7 +44,7 @@ input[type="submit"]:hover {
 }
 
 form {
-  padding: 1px 100px 1px 1px;
+  padding: 1px 100px 1px 100px;
 }
 .col-25 {
   float: left;
