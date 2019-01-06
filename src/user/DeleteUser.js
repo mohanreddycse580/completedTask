@@ -47,7 +47,7 @@ class DeleteUser extends Component {
                 <th>Age</th>
                 <th>Gender</th>
                 <th>Address</th>
-                <th>Operation</th>
+                <th>Actions</th>
               </tr>
               {this.state.users.map((d, index) => (
                 <tr>

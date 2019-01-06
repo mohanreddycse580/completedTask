@@ -15,7 +15,7 @@ class Header extends React.Component {
                 <a href="/add">Add</a>
               </li>
               <li>
-                <a href="/delete">Delete</a>
+                <a href="/delete">View</a>
               </li>
             </ul>
           </li>
