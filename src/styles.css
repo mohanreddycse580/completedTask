@@ -3,9 +3,16 @@
   text-align: center;
 }
 .homescreen {
-  padding: 100px 100px 500px 300px;
+  padding: 200px 500px 500px 300px;
 
   text-align: center;
   background-image: url("suncorp.png");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
 }
